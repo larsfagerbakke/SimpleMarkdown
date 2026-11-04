@@ -1,0 +1,154 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:md="clr-namespace:Markdown.Avalonia;assembly=Markdown.Avalonia"
+        xmlns:ctb="clr-namespace:ColorTextBlock.Avalonia;assembly=ColorTextBlock.Avalonia"
+        x:Class="SimpleMarkdown.MainWindow"
+        Title="SimpleMarkdown" Icon="avares://SimpleMarkdown/app.ico"
+        Width="1000" Height="750" WindowStartupLocation="CenterScreen" MinWidth="500" MinHeight="300"
+        Background="#1E1E1E" DragDrop.AllowDrop="True"
+        WindowDecorations="None">
+    <Window.Styles>
+        <Style Selector="Button.bar, ToggleButton.bar">
+            <Setter Property="Foreground" Value="#999999"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Padding" Value="10,4"/>
+            <Setter Property="Margin" Value="2,0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="CornerRadius" Value="5"/>
+        </Style>
+        <Style Selector="Button.bar:pointerover /template/ ContentPresenter, ToggleButton.bar:pointerover /template/ ContentPresenter">
+            <Setter Property="Background" Value="#2D2D2D"/>
+            <Setter Property="Foreground" Value="#DADADA"/>
+        </Style>
+        <Style Selector="ToggleButton.bar:checked /template/ ContentPresenter">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#A68AF9"/>
+        </Style>
+        <Style Selector="Button.cap">
+            <Setter Property="Foreground" Value="#999999"/><Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Width" Value="40"/><Setter Property="Height" Value="38"/>
+            <Setter Property="Padding" Value="0"/><Setter Property="CornerRadius" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/><Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style Selector="Button.cap:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="#2D2D2D"/><Setter Property="Foreground" Value="#DADADA"/></Style>
+        <Style Selector="Button.close:pointerover /template/ ContentPresenter"><Setter Property="Background" Value="#C42B1C"/><Setter Property="Foreground" Value="White"/></Style>
+    </Window.Styles>
+    <Border BorderBrush="#2B2B2B" BorderThickness="1">
+    <Grid>
+    <DockPanel>
+        <Grid x:Name="TitleBar" DockPanel.Dock="Top" Height="38" Background="#1E1E1E">
+            <Border BorderBrush="#2B2B2B" BorderThickness="0,0,0,1"/>
+            <TextBlock x:Name="TitleText" HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="#999999" FontSize="13" TextTrimming="CharacterEllipsis" Margin="400,0"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="12,0,0,0">
+                <Image Source="avares://SimpleMarkdown/app.png" Width="20" Height="20" VerticalAlignment="Center" IsHitTestVisible="False"/>
+                <TextBlock Text="SimpleMarkdown" Foreground="#DADADA" FontSize="13" FontWeight="SemiBold"
+                           VerticalAlignment="Center" Margin="8,0,16,0" IsHitTestVisible="False"/>
+                <Button x:Name="OpenButton" Content="Open" Classes="bar" ToolTip.Tip="Open file (Ctrl+O)"/>
+                <Button x:Name="ReloadButton" Content="Reload" Classes="bar" ToolTip.Tip="Reload (F5)"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Stretch">
+                <ToggleButton x:Name="SyntaxToggle" Content="&lt;/&gt; Syntax" Classes="bar"
+                              VerticalAlignment="Center" Margin="0,0,10,0"
+                              ToolTip.Tip="Switch between reading view and markdown syntax (Ctrl+M)"/>
+                <Button x:Name="MinButton" Content="&#x2013;" Classes="cap"/>
+                <Button x:Name="MaxButton" Content="&#x25A1;" Classes="cap"/>
+                <Button x:Name="CloseButton" Content="&#x2715;" Classes="cap close"/>
+            </StackPanel>
+        </Grid>
+        <Border DockPanel.Dock="Bottom" Background="#1E1E1E" Height="26">
+            <TextBlock x:Name="StatsText" Foreground="#999999" FontSize="12"
+                       HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,14,0"/>
+        </Border>
+        <Grid>
+            <md:MarkdownScrollViewer x:Name="Viewer" Margin="0" Padding="40,16,40,48">
+                <md:MarkdownScrollViewer.Styles>
+                    <Style Selector="ctb|CTextBlock">
+                        <Setter Property="Foreground" Value="#DADADA"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="LineHeight" Value="26"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading1, ctb|CTextBlock.Heading2, ctb|CTextBlock.Heading3, ctb|CTextBlock.Heading4, ctb|CTextBlock.Heading5, ctb|CTextBlock.Heading6">
+                        <Setter Property="LineHeight" Value="NaN"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading1">
+                        <Setter Property="FontSize" Value="30"/><Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Foreground" Value="#F0F0F0"/><Setter Property="Margin" Value="0,4,0,12"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading2">
+                        <Setter Property="FontSize" Value="25"/><Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Foreground" Value="#F0F0F0"/><Setter Property="Margin" Value="0,16,0,8"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading3">
+                        <Setter Property="FontSize" Value="21"/><Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Foreground" Value="#F0F0F0"/><Setter Property="Margin" Value="0,14,0,6"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading4">
+                        <Setter Property="FontSize" Value="18"/><Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Foreground" Value="#F0F0F0"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.Heading5, ctb|CTextBlock.Heading6">
+                        <Setter Property="FontSize" Value="16"/><Setter Property="FontWeight" Value="Bold"/>
+                        <Setter Property="Foreground" Value="#999999"/>
+                    </Style>
+                    <Style Selector="ctb|CTextBlock.ListMarker"><Setter Property="Foreground" Value="#999999"/></Style>
+
+                    <Style Selector="Border.Table">
+                        <Setter Property="BorderBrush" Value="#4A4A4A"/><Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="CornerRadius" Value="4"/><Setter Property="Margin" Value="0,0,0,16"/>
+                    </Style>
+                    <Style Selector="Grid.Table"><Setter Property="Background" Value="Transparent"/></Style>
+                    <Style Selector="Border.TableHeader">
+                        <Setter Property="Background" Value="#2A2A2A"/><Setter Property="BorderBrush" Value="#4A4A4A"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/><Setter Property="Padding" Value="14,4"/>
+                    </Style>
+                    <Style Selector="Border.TableHeader ctb|CTextBlock, Border.OddTableRow ctb|CTextBlock, Border.EvenTableRow ctb|CTextBlock"><Setter Property="Margin" Value="0"/></Style>
+                    <Style Selector="Border.TableHeader ctb|CTextBlock"><Setter Property="FontWeight" Value="SemiBold"/><Setter Property="Foreground" Value="#F0F0F0"/></Style>
+                    <Style Selector="Border.OddTableRow">
+                        <Setter Property="Background" Value="#1E1E1E"/><Setter Property="BorderBrush" Value="#4A4A4A"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/><Setter Property="Padding" Value="14,4"/>
+                    </Style>
+                    <Style Selector="Border.EvenTableRow">
+                        <Setter Property="Background" Value="#232323"/><Setter Property="BorderBrush" Value="#4A4A4A"/>
+                        <Setter Property="BorderThickness" Value="0,0,1,1"/><Setter Property="Padding" Value="14,4"/>
+                    </Style>
+
+                    <Style Selector="Border.Blockquote">
+                        <Setter Property="BorderBrush" Value="#A68AF9"/><Setter Property="BorderThickness" Value="3,0,0,0"/>
+                        <Setter Property="Background" Value="Transparent"/><Setter Property="Padding" Value="14,2,0,2"/>
+                        <Setter Property="Margin" Value="0,4,0,12"/>
+                    </Style>
+                    <Style Selector="Border.Blockquote ctb|CTextBlock"><Setter Property="Foreground" Value="#B8B8B8"/><Setter Property="Margin" Value="0,3"/></Style>
+
+                    <Style Selector="Border.CodeBlock">
+                        <Setter Property="Background" Value="#262626"/><Setter Property="BorderBrush" Value="#363636"/>
+                        <Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="8"/>
+                        <Setter Property="Padding" Value="14,10"/><Setter Property="Margin" Value="0,0,0,16"/>
+                    </Style>
+                    <Style Selector="Label.LangInfo">
+                        <Setter Property="Background" Value="Transparent"/><Setter Property="BorderThickness" Value="0"/>
+                        <Setter Property="Foreground" Value="#777777"/><Setter Property="FontSize" Value="12"/>
+                    </Style>
+                </md:MarkdownScrollViewer.Styles>
+            </md:MarkdownScrollViewer>
+            <ScrollViewer x:Name="RawScroll" IsVisible="False">
+                <SelectableTextBlock x:Name="RawText" Foreground="#DADADA" FontFamily="Cascadia Code,Consolas,DejaVu Sans Mono,monospace"
+                                     FontSize="14" TextWrapping="Wrap" Margin="40,16,40,48"/>
+            </ScrollViewer>
+            <TextBlock x:Name="Hint" Text="Open a markdown file (Ctrl+O) or drop one here."
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="#999999" FontSize="16" IsHitTestVisible="False"/>
+        </Grid>
+    </DockPanel>
+    <Border x:Name="EdgeN" Height="5" VerticalAlignment="Top" Background="Transparent" Cursor="SizeNorthSouth" Margin="8,0"/>
+    <Border x:Name="EdgeS" Height="5" VerticalAlignment="Bottom" Background="Transparent" Cursor="SizeNorthSouth" Margin="8,0"/>
+    <Border x:Name="EdgeW" Width="5" HorizontalAlignment="Left" Background="Transparent" Cursor="SizeWestEast" Margin="0,8"/>
+    <Border x:Name="EdgeE" Width="5" HorizontalAlignment="Right" Background="Transparent" Cursor="SizeWestEast" Margin="0,8"/>
+    <Border x:Name="CornerNW" Width="8" Height="8" HorizontalAlignment="Left" VerticalAlignment="Top" Background="Transparent" Cursor="TopLeftCorner"/>
+    <Border x:Name="CornerNE" Width="8" Height="8" HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" Cursor="TopRightCorner"/>
+    <Border x:Name="CornerSW" Width="8" Height="8" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="Transparent" Cursor="BottomLeftCorner"/>
+    <Border x:Name="CornerSE" Width="8" Height="8" HorizontalAlignment="Right" VerticalAlignment="Bottom" Background="Transparent" Cursor="BottomRightCorner"/>
+    </Grid>
+    </Border>
+</Window>

@@ -1,0 +1,86 @@
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+  <Package Name="SimpleMarkdown" Manufacturer="SimpleMarkdown" Version="$(var.Version)"
+           UpgradeCode="6f2c9d1e-3b7a-4c58-9e41-5a8d2f7b0c13" Scope="perUser" Compressed="yes">
+    <MajorUpgrade DowngradeErrorMessage="A newer version of SimpleMarkdown is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="app.ico" SourceFile="$(var.AppIcon)" />
+    <Property Id="ARPPRODUCTICON" Value="app.ico" />
+
+    <StandardDirectory Id="LocalAppDataFolder">
+      <Directory Id="ProgramsDir" Name="Programs">
+        <Directory Id="INSTALLFOLDER" Name="SimpleMarkdown" />
+      </Directory>
+    </StandardDirectory>
+
+    <!-- Published application files -->
+    <ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)\**" />
+    </ComponentGroup>
+
+    <!-- "Open with" registration and default-app capabilities -->
+    <ComponentGroup Id="Registration" Directory="INSTALLFOLDER">
+      <Component Id="AppRegistration">
+        <RegistryKey Root="HKCU" Key="Software\Classes\Applications\SimpleMarkdown.exe">
+          <RegistryValue Type="string" Value="SimpleMarkdown" KeyPath="yes" />
+          <RegistryKey Key="shell\open\command">
+            <RegistryValue Type="string" Value="&quot;[INSTALLFOLDER]SimpleMarkdown.exe&quot; &quot;%1&quot;" />
+          </RegistryKey>
+          <RegistryKey Key="SupportedTypes">
+            <RegistryValue Name=".md" Type="string" Value="" />
+            <RegistryValue Name=".markdown" Type="string" Value="" />
+            <RegistryValue Name=".mdown" Type="string" Value="" />
+            <RegistryValue Name=".mkd" Type="string" Value="" />
+          </RegistryKey>
+        </RegistryKey>
+
+        <RegistryKey Root="HKCU" Key="Software\Classes\SimpleMarkdown.Document">
+          <RegistryValue Type="string" Value="Markdown Document" />
+          <RegistryValue Key="DefaultIcon" Type="string" Value="&quot;[INSTALLFOLDER]SimpleMarkdown.exe&quot;,0" />
+          <RegistryValue Key="shell\open\command" Type="string" Value="&quot;[INSTALLFOLDER]SimpleMarkdown.exe&quot; &quot;%1&quot;" />
+        </RegistryKey>
+
+        <RegistryKey Root="HKCU" Key="Software\SimpleMarkdown\Capabilities">
+          <RegistryValue Name="ApplicationName" Type="string" Value="SimpleMarkdown" />
+          <RegistryValue Name="ApplicationDescription" Type="string" Value="Simple markdown reader" />
+          <RegistryKey Key="FileAssociations">
+            <RegistryValue Name=".md" Type="string" Value="SimpleMarkdown.Document" />
+            <RegistryValue Name=".markdown" Type="string" Value="SimpleMarkdown.Document" />
+            <RegistryValue Name=".mdown" Type="string" Value="SimpleMarkdown.Document" />
+            <RegistryValue Name=".mkd" Type="string" Value="SimpleMarkdown.Document" />
+          </RegistryKey>
+        </RegistryKey>
+        <RegistryValue Root="HKCU" Key="Software\RegisteredApplications" Name="SimpleMarkdown" Type="string"
+                       Value="Software\SimpleMarkdown\Capabilities" />
+      </Component>
+
+      <?foreach ext in md;markdown;mdown;mkd?>
+      <Component Id="Ext_$(ext)">
+        <!-- Right-click entry -->
+        <RegistryKey Root="HKCU" Key="Software\Classes\SystemFileAssociations\.$(ext)\shell\SimpleMarkdown">
+          <RegistryValue Type="string" Value="Open in SimpleMarkdown" KeyPath="yes" />
+          <RegistryValue Name="Icon" Type="string" Value="&quot;[INSTALLFOLDER]SimpleMarkdown.exe&quot;,0" />
+          <RegistryValue Key="command" Type="string" Value="&quot;[INSTALLFOLDER]SimpleMarkdown.exe&quot; &quot;%1&quot;" />
+        </RegistryKey>
+        <!-- Listed under "Open with" -->
+        <RegistryValue Root="HKCU" Key="Software\Classes\.$(ext)\OpenWithProgids" Name="SimpleMarkdown.Document" Type="string" Value="" />
+        <RegistryValue Root="HKCU" Key="Software\Classes\.$(ext)\OpenWithList\SimpleMarkdown.exe" Type="string" Value="" />
+      </Component>
+      <?endforeach?>
+    </ComponentGroup>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Component Id="StartMenuShortcut" Guid="*">
+        <Shortcut Id="AppShortcut" Name="SimpleMarkdown" Target="[INSTALLFOLDER]SimpleMarkdown.exe"
+                  WorkingDirectory="INSTALLFOLDER" />
+        <RegistryValue Root="HKCU" Key="Software\SimpleMarkdown" Name="StartMenuShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="SimpleMarkdown" Level="1">
+      <ComponentGroupRef Id="AppFiles" />
+      <ComponentGroupRef Id="Registration" />
+      <ComponentRef Id="StartMenuShortcut" />
+    </Feature>
+  </Package>
+</Wix>
