@@ -19,6 +19,7 @@ public partial class MainWindow : Window
     public MainWindow(string? path)
     {
         InitializeComponent();
+        VersionText.Text = "v" + (typeof(MainWindow).Assembly.GetName().Version?.Major ?? 0);
 
         OpenButton.Click += async (_, _) => await OpenAsync();
         ReloadButton.Click += (_, _) => Render();

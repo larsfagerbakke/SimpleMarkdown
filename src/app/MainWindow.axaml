@@ -58,8 +58,12 @@
             </StackPanel>
         </Grid>
         <Border DockPanel.Dock="Bottom" Background="#1E1E1E" Height="26">
-            <TextBlock x:Name="StatsText" Foreground="#999999" FontSize="12"
-                       HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,14,0"/>
+            <Grid>
+                <TextBlock x:Name="VersionText" Foreground="#999999" FontSize="12"
+                           HorizontalAlignment="Left" VerticalAlignment="Center" Margin="14,0,0,0"/>
+                <TextBlock x:Name="StatsText" Foreground="#999999" FontSize="12"
+                           HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,14,0"/>
+            </Grid>
         </Border>
         <Grid>
             <md:MarkdownScrollViewer x:Name="Viewer" Margin="0" Padding="40,16,40,48">

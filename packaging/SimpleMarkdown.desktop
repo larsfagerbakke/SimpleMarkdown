@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=SimpleMarkdown
+GenericName=Markdown Viewer
+Comment=Minimal dark-themed markdown viewer
+Exec=simplemarkdown %f
+Icon=simplemarkdown
+Terminal=false
+Categories=Office;Viewer;
+MimeType=text/markdown;text/x-markdown;
+StartupWMClass=SimpleMarkdown
