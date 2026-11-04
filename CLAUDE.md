@@ -8,6 +8,8 @@ A minimal, dark-themed markdown viewer. Cross-platform desktop app built with .N
 SimpleMarkdown/
 ├── .gitignore               Ignore rules (bin/, obj/, out/, IDE files)
 ├── CLAUDE.md                This file
+├── LICENSE                  MIT license, requires keeping the copyright notice
+├── README.md                Project description, features, run and publish instructions
 ├── sample.md                GFM test document used to try the viewer
 └── src/
     └── app/                 Avalonia application
