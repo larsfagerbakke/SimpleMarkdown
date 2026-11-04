@@ -21,17 +21,52 @@ A minimal, dark-themed markdown viewer for the desktop. Built with .NET and Aval
 
 ## Install
 
-Download the latest package from the [releases page](https://github.com/larsfagerbakke/SimpleMarkdown/releases).
+Packages are published on the [releases page](https://github.com/larsfagerbakke/SimpleMarkdown/releases).
 
-Fedora:
+### Fedora
+
+Install:
+
+1. Download `simplemarkdown-<N>-1.x86_64.rpm` from the latest release, either in the browser or with the GitHub CLI:
+
+   ```
+   gh release download --repo larsfagerbakke/SimpleMarkdown --pattern '*.rpm'
+   ```
+
+2. Install it with `dnf`, which also pulls in missing dependencies:
+
+   ```
+   sudo dnf install ./simplemarkdown-*.rpm
+   ```
+
+3. Start the app from the application menu or from a terminal:
+
+   ```
+   simplemarkdown path/to/file.md
+   ```
+
+The package installs the app to `/usr/lib/simplemarkdown`, the `simplemarkdown` command to `/usr/bin`, a desktop entry that lists the app for markdown files, and an icon. To open a markdown file from the file manager, choose Open With and then SimpleMarkdown.
+
+Update: install the RPM of a newer release the same way. `dnf` replaces the older version.
+
+Uninstall:
 
 ```
-sudo dnf install ./simplemarkdown-*.rpm
+sudo dnf remove simplemarkdown
 ```
 
-Other Linux distributions: extract `simplemarkdown-v*-linux-x64.tar.gz` and run the `SimpleMarkdown` executable inside.
+This removes everything the package installed. The app stores no settings, so nothing else is left behind.
 
-After installing the RPM, start the app from the application menu or with `simplemarkdown path/to/file.md`.
+Check the installation:
+
+```
+rpm -q simplemarkdown
+rpm -V simplemarkdown
+```
+
+### Other Linux distributions
+
+Extract `simplemarkdown-v<N>-linux-x64.tar.gz` and run the `SimpleMarkdown` executable inside. To uninstall, delete the extracted folder.
 
 ## Requirements
 
